@@ -1,0 +1,65 @@
+﻿@using QM.BlazorAdmin.Pages.Qtz
+@using QM.Utility.Quartz
+@using Quartz
+@inherits QuartzModifyBase
+@code{
+
+}
+
+<BForm Style="width:400px;" @ref="demoForm" Value="quartzModel" LabelAlign="@LabelAlign.Right">
+    <BFormItem TValue="string" Label="任务分组" Name="@nameof(QuartzOptionDTO.GroupName)" IsRequired="true">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="任务名称" Name="@nameof(QuartzOptionDTO.TaskName)" IsRequired="true">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+
+    @*<BFormItem TValue="IntervalType" Label="任务类型" IsRequired="true" Name="@nameof(QuartzOption.IntervalType)">
+            <BRadioGroup TValue="IntervalType">
+                <BRadio Value="@(IntervalType.Simple)">Simple</BRadio>
+                <BRadio Value="@(IntervalType.Cron)">Cron</BRadio>
+            </BRadioGroup>
+        </BFormItem>*@
+
+    <BFormItem TValue="QM.BlazorAdmin.IntervalType?" Label="任务类型" IsRequired="false" Name="@nameof(QuartzOptionDTO.IntervalType)">
+        <BSelect @bind-Value="TaskType">
+        </BSelect>
+    </BFormItem>
+    <BFormItem TValue="string" Label="轮询策略" Name="@nameof(QuartzOptionDTO.Interval)" IsRequired="true">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+
+    <BFormItem TValue="TriggerState?" Label="任务状态" IsRequired="false" Name="@nameof(QuartzOptionDTO.TaskStatus)">
+        <BSelect @bind-Value="TaskStatus">
+        </BSelect>
+    </BFormItem>
+    <BFormItem TValue="QM.BlazorAdmin.ExecuteType?" Label="目标类型" IsRequired="false" Name="@nameof(QuartzOptionDTO.ExecuteType)">
+        <BSelect @bind-Value="ExecuteType">
+        </BSelect>
+    </BFormItem>
+
+    <BFormItem TValue="string" Label="目标" Name="@nameof(QuartzOptionDTO.TaskTarget)" IsRequired="true">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    @*<BFormItem TValue="string" Label="传参" Name="@nameof(QuartzOption.TaskData)" IsRequired="false" >
+            <BInput TValue="string"></BInput>
+        </BFormItem>*@
+    <BFormItem TValue="DateTime?" Label="开始执行时间" IsRequired="false" Name="@nameof(QuartzOptionDTO.BeginTime)">
+        <BDatePicker></BDatePicker>
+    </BFormItem>
+    @*<BFormItem TValue="DateTime?" Label="结束执行时间" IsRequired="false" Name="@nameof(QuartzOption.EndTime)" >
+            <BDatePicker></BDatePicker>
+        </BFormItem>*@
+    <BFormItem TValue="int" Label="执行次数" Name="@nameof(QuartzOptionDTO.RunTimes)" IsRequired="false">
+        <BInput TValue="int"></BInput>
+    </BFormItem>
+    @*<BFormItem TValue="string" Label="描述" Name="@nameof(QuartzOption.Describe)" IsRequired="false" >
+            <BInput TValue="string"></BInput>
+        </BFormItem>*@
+    <BFormItem TValue="int" Label="ID" Name="@nameof(QuartzOptionDTO.Id)" IsRequired="true " IsHidden="true">
+        <BInput TValue="int"></BInput>
+    </BFormItem>
+    <BFormItem TValue="object">
+        <BButton Type="@ButtonType.Primary" OnClick="e=>Submit()" Style="text-align:center;width:100%;">保存</BButton>
+    </BFormItem>
+</BForm>

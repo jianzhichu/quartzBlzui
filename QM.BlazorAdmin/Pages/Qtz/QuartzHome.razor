@@ -1,0 +1,61 @@
+﻿@page   "/"
+@page "/quartz"
+@using QM.BlazorAdmin.Pages.Qtz
+@using QM.Utility.Quartz
+@using Quartz
+
+@inherits QuartzHomeBase
+
+<BForm Inline="true" @ref="searchForm" Style="text-align:left">
+    <BFormItem TValue="string" Label="任务分组" Name="@nameof(QuartzSearchFilter.GroupName)" IsRequired="false">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="string" Label="任务名称" IsRequired="false" Name="@nameof(QuartzSearchFilter.TaskName)">
+        <BInput TValue="string"></BInput>
+    </BFormItem>
+    <BFormItem TValue="QM.BlazorAdmin.IntervalType?" Label="任务类型" IsRequired="false" Name="@nameof(QuartzSearchFilter.TaskType)">
+        <BSelect @bind-Value="TaskType">
+        </BSelect>
+    </BFormItem>
+    <BFormItem TValue="TriggerState?" Label="任务状态" IsRequired="false" Name="@nameof(QuartzSearchFilter.TaskStatus)">
+        <BSelect @bind-Value="TaskStatus">
+        </BSelect>
+    </BFormItem>
+    <BFormItem TValue="object">
+        <BButton Type="@ButtonType.Primary" OnClick="e=>ReLoadData()" Icon="el-icon-search"></BButton>
+    </BFormItem>
+    <BButtonGroup>
+        @*<BButton IsCircle="true" Icon="el-icon-search"></BButton>*@
+        <BButton Type="@ButtonType.Success"  Icon="el-icon-star-on" OnClick="Add"></BButton>
+        <BButton Type="@ButtonType.Danger" Icon="el-icon-delete" OnClick="DeleteChecked"></BButton>
+        <BButton Type="@ButtonType.Warning"  Icon="el-icon-edit" IsDisabled="true"></BButton>
+        <BButton Type="@ButtonType.Primary" Icon="el-icon-check" IsDisabled="true"></BButton>
+        <BButton Type="@ButtonType.Info" IsPlain="true" IsDisabled="false" OnClick="ShowJobExeInfo">运行记录</BButton>
+    </BButtonGroup>
+</BForm>
+
+
+<BTable IgnoreProperties="IgnoreProp" AutoGenerateColumns="true" DataSource="Datas"
+        PageSize="pageSize" @ref="table" Total="Total" @bind-CurrentPage="CurrentPage" >
+    <BTableColumns>
+        <BTableTemplateColumn Text="操作" Style="text-align:center">
+            @*<BButton Type="@ButtonType.Success" Size="@ButtonSize.Mini" OnClick="@(e=>Start(context))">开始</BButton>
+        <BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=>Stop(context))">停止</BButton>
+        <BButton Type="@ButtonType.Primary" Size="@ButtonSize.Mini" OnClick="@(e=>Edit(context))">编辑</BButton>*@
+
+            
+            <BDropDown Style="cursor:pointer;">
+                <Trigger>
+                    <BButton Type="@ButtonType.Default" Size="@ButtonSize.Mini">操作</BButton>
+                </Trigger>
+                <Items>
+                    <BDropDownItem OnClick="@(e=> Start(context))">开始</BDropDownItem>
+                    <BDropDownItem OnClick="@(e=> Stop(context))">停止</BDropDownItem>
+                    <BDropDownItem OnClick="@(e=> Edit(context))">编辑</BDropDownItem>
+                    <BDropDownItem OnClick="@(e=> Delete(context))">删除</BDropDownItem>
+                </Items>
+            </BDropDown>
+            @*<BButton Type="@ButtonType.Danger" Size="@ButtonSize.Mini" OnClick="@(e=> Delete(context))">删除</BButton>*@
+        </BTableTemplateColumn>
+    </BTableColumns>
+</BTable>
